@@ -1,5 +1,4 @@
 from prettytable import PrettyTable
-numteach = int(input('please enter the number of teachers (max 10)(min 5) : '))
 class section():
     def __init__(self,name):
         self.name = name
@@ -17,22 +16,25 @@ class teacher():
 
 class_lst = [section('A'),section('B'),section('C'),section('D'),section('E'),section('F')]
 teacher_lst = []
-for i in range(numteach):
-    name = input("enter teacher's name : ")
-    period = int(input("enter the number of periods : "))
-    sub = input("enter the subject they teach (phy/chem/math/bio/cs)")
-    lst = [name,sub,period]
-    if sub=='phy':
-        teacher_lst.append(teacher(name, period, sub))
-    if sub=='chem':
-        teacher_lst.append(teacher(name, period, sub))
-    if sub=='math':
-        teacher_lst.append(teacher(name, period, sub))
-    if sub=='bio':
-        teacher_lst.append(teacher(name, period, sub))
-    if sub=='cs':
-        teacher_lst.append(teacher(name, period, sub))
-
+def get_input():
+    try:
+        numteach = int(input('please enter the number of teachers (max 10)(min 5) : '))
+        for i in range(numteach):
+            name = input("enter teacher's name : ")
+            period = int(input("enter the number of periods : "))
+            sub = input("enter the subject they teach (phy/chem/math/bio/cs)")
+            if sub=='phy':
+                teacher_lst.append(teacher(name, period, sub))
+            if sub=='chem':
+                teacher_lst.append(teacher(name, period, sub))
+            if sub=='math':
+                teacher_lst.append(teacher(name, period, sub))
+            if sub=='bio':
+                teacher_lst.append(teacher(name, period, sub))
+            if sub=='cs':
+                teacher_lst.append(teacher(name, period, sub))
+    except:
+        x = 5/0
 def class_finder(sub, class_lst,no_classes_handled):
     x1 = -1
     for i in range(len(class_lst)):
@@ -74,21 +76,35 @@ def ttmaker (teacher_lst,class_lst):
 
 
 def pretty_printing():
-    ttmaker(teacher_lst, class_lst)
-    for i in range(len(class_lst)):
-        print("Class "+str(i+1)+" Time Table")
-        x = PrettyTable()
-        tt = class_lst[i].tt
-        x.add_column("Periods", [1, 2, 3, 4])
-        dl = ['Monday',"Tuesday",'Wednesday','Thursday','Friday']
-        for j in range(len(tt)):
-            lst = []
-            for k in range(len(tt[j])):
-                str1 = tt[j][k][0]
-                str2 = tt[j][k][1]
-                string = (str2+" ("+str1+")")
-                lst.append(string)
-            x.add_column(dl[j],lst)
-        print(x)
-        print("\n\n")
-pretty_printing()
+    try:
+        ttmaker(teacher_lst, class_lst)
+        for i in range(len(class_lst)):
+            print("Class "+str(i+1)+" Time Table")
+            x = PrettyTable()
+            tt = class_lst[i].tt
+            x.add_column("Periods", [1, 2, 3, 4])
+            dl = ['Monday',"Tuesday",'Wednesday','Thursday','Friday']
+            for j in range(len(tt)):
+                lst = []
+                for k in range(len(tt[j])):
+                    str1 = tt[j][k][0]
+                    str2 = tt[j][k][1]
+                    string = (str2+" ("+str1+")")
+                    lst.append(string)
+                x.add_column(dl[j],lst)
+            print(x)
+            print("\n\n")
+    except:
+        q = 5/0
+while True:
+    try :
+        get_input()
+        pretty_printing()
+        a = input("would you like to try again?(y/n)")
+        if a == 'n':
+            break
+    except:
+        print('There has been an error !!')
+        a = input("would you like to try again?(y/n)")
+        if a == 'n':
+            break
